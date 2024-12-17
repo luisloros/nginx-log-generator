@@ -4,8 +4,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/brianvoe/gofakeit/v6"
-	"github.com/caarlos0/env/v6"
+	"github.com/brianvoe/gofakeit/v7"
+	"github.com/caarlos0/env/v11"
 	
 
 	"log"
@@ -35,8 +35,9 @@ func main() {
 	// Setup new logger
 	// open output file
 	log.SetOutput(os.Stdout)
-	fo, err := os.Create(cfg.LogFile)//, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
-	if cfg.LogFile != "null" {
+	fo, err := os.Open(cfg.LogFile)//, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	if cfg.LogFile != "null" && err !=nil  {
+		fo, err := os.Create(cfg.LogFile)//, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatalf("error opening file: %v", err)
 		} else {

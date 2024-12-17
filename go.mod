@@ -1,8 +1,8 @@
 module github.com/luisloros/nginx-log-generator
 
-go 1.13
+go 1.23
 
 require (
-	github.com/brianvoe/gofakeit/v6 v6.8.0
-	github.com/caarlos0/env/v6 v6.7.1
+	github.com/brianvoe/gofakeit/v7 v7.1.2
+	github.com/caarlos0/env/v11 v11.3.0
 )
