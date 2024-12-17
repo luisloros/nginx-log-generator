@@ -1,12 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 	"time"
 
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/caarlos0/env/v6"
+	
+
+	"log"
+	"os"
 )
 
 type config struct {
@@ -20,6 +23,7 @@ type config struct {
 	PercentagePut    int     `env:"PUT_PERCENT" envDefault:"0"`
 	PercentagePatch  int     `env:"PATCH_PERCENT" envDefault:"0"`
 	PercentageDelete int     `env:"DELETE_PERCENT" envDefault:"0"`
+	LogFile		 string  `env:"LOG_FILE" envDefault:"null"`
 }
 
 func main() {
@@ -27,6 +31,25 @@ func main() {
 	if err := env.Parse(&cfg); err != nil {
 		panic(err)
 	}
+
+	// Setup new logger
+	// open output file
+	log.SetOutput(os.Stdout)
+	fo, err := os.Create(cfg.LogFile)//, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	if cfg.LogFile != "null" {
+		if err != nil {
+			log.Fatalf("error opening file: %v", err)
+		} else {
+			log.SetOutput(fo)
+		}
+	}
+	// close fo on exit and check for its returned error
+	defer func() {
+		if err := fo.Close(); err != nil {
+			panic(err)
+		}
+	}()
+
 	checkMinMax(&cfg.PathMinLength, &cfg.PathMaxLength)
 
 	ticker := time.NewTicker(time.Second / time.Duration(cfg.Rate))
@@ -49,8 +72,8 @@ func main() {
 		statusCode = weightedStatusCode(cfg.StatusOkPercent)
 		bodyBytesSent = realisticBytesSent(statusCode)
 		userAgent = gofakeit.UserAgent()
-
-		fmt.Printf("%s - - [%s] \"%s %s %s\" %v %v \"%s\" \"%s\"\n", ip, timeLocal.Format("02/Jan/2006:15:04:05 -0700"), httpMethod, path, httpVersion, statusCode, bodyBytesSent, referrer, userAgent)
+		
+		log.Printf("%s - - [%s] \"%s %s %s\" %v %v \"%s\" \"%s\"\n", ip, timeLocal.Format("02/Jan/2006:15:04:05 -0700"), httpMethod, path, httpVersion, statusCode, bodyBytesSent, referrer, userAgent)
 	}
 }
 

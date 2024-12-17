@@ -4,6 +4,8 @@ A tiny Go utility to generate a large amount realistic-looking Nginx logs quickl
 
 Most of the heavy lifting is done by the amazing [gofakeit](https://github.com/brianvoe/gofakeit) library, with some extra work to skew the results towards typical values.
 
+Forked from original repository to support writing logs to a file.
+
 ## Usage
 
 The most important step is to set the desired rate in the `RATE` environment variable. The simplest way to do this is the following:
@@ -36,6 +38,7 @@ The following environment variables can be set to modify the output.
 | PUT_PERCENT       | 0       | Percentage of requests that will be `PUT` requests. If the total adds up to less than 100%, the rest will be made up of random HTTP methods.    |
 | PATCH_PERCENT     | 0       | Percentage of requests that will be `PATCH` requests. If the total adds up to less than 100%, the rest will be made up of random HTTP methods.  |
 | DELETE_PERCENT    | 0       | Percentage of requests that will be `DELETE` requests. If the total adds up to less than 100%, the rest will be made up of random HTTP methods. |
+| LOG_FILE          | stdout  | Log file path. Default will write to Standard out |
 
 ## Note
 

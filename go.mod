@@ -1,4 +1,4 @@
-module github.com/kscarlett/nginx-log-generator
+module github.com/luisloros/nginx-log-generator
 
 go 1.13
 

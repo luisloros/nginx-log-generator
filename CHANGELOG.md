@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0] - 2024-12-17
+
+Added option to write to a file.
+
 ## [v1.1.0] - 2021-09-18
 
 You are now able to configure the tool better with a bunch of environment variables. See [README.md](README.md#configuration) for an up-to-date list of variables with their defaults.
